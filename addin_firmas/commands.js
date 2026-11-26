@@ -1,168 +1,188 @@
 /*
  * Complemento de Firmas Corporativas - Grupo Sandor
- * Conecta directamente a Entra ID (Microsoft Graph) via Nested App Authentication (NAA)
- * y actualiza la firma en vivo en OnNewMessageCompose y OnMessageFromChanged.
+ * Generado desde Editor Profesional TinyMCE
  */
-
 const CLIENT_ID = "6f18f787-f35d-4bdb-91ea-770511d90e54";
 const TENANT_ID = "c226adba-bbe6-461e-9764-3196c2c862e0";
-const ASSETS_BASE = "https://liderticelite.github.io/Firmas-de-Correo";
+const PLANTILLAS = {
+  "elite": {
+    "telDef": "601 743 18 22",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding-right: 18px;\"><a href=\"https://elitefms.com.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/logo_elite.png\" width=\"229\" height=\"131\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<div style=\"font-size: 14px; font-weight: 600; color: #3a81b1; margin: 0; white-space: nowrap;\">{{nombre}}</div>\n<div style=\"font-size: 13px; font-weight: bold; color: #3a81b1; margin: 2px 0 8px; white-space: nowrap;\">{{cargo}}</div>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width: 100.369%; height: 52.5px;\">\n<tbody>\n<tr style=\"height: 17.5px;\">\n<td style=\"padding-bottom: 5px; width: 9.21659%; vertical-align: middle; height: 17.5px;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_email.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: rgb(58, 129, 177); white-space: nowrap; width: 86.2687%; height: 17.5px;\"><a href=\"mailto:{{correo}}\" style=\"color: #3a81b1; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr style=\"height: 17.5px;\">\n<td style=\"padding-bottom: 5px; width: 9.21659%; vertical-align: middle; height: 17.5px;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_phone.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: rgb(58, 129, 177); white-space: nowrap; width: 86.2687%; height: 17.5px;\"><a href=\"tel:{{telefono}}\" style=\"color: #3a81b1; text-decoration: none;\">{{telefono}} - {{celular}}</a></td>\n</tr>\n<tr style=\"height: 17.5px;\">\n<td style=\"width: 9.21659%; vertical-align: middle; height: 17.5px;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_location.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: rgb(58, 129, 177); white-space: nowrap; width: 86.2687%; height: 17.5px;\">Calle 71 No. 72A &ndash; 41 Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#3A81B1\" style=\"width: 1px; height: 96px; background-color: #3a81b1; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding-left: 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td align=\"center\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.instagram.com/elitefms.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_instagram.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.facebook.com/elitefms/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_facebook.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://co.linkedin.com/company/elitefms\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_linkedin.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.tiktok.com/@elitefms.co\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_tiktok.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td><a href=\"https://www.youtube.com/@ELITEFACILITYMANAGEMENT\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/icon_youtube.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n<tr>\n<td align=\"center\" style=\"padding-top: 7px;\"><a href=\"https://elitefms.com.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_elite/btn_web.png\" width=\"143\" height=\"24\" style=\"display: block; border: 0; margin: 0 auto;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #3a81b1; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #3a81b1; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  },
+  "sarupetrol": {
+    "telDef": "601 927 80 89",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding-right: 18px;\"><a href=\"https://www.sarupetrol.com/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/logo_sarupetrol.png\" width=\"130\" height=\"76\" style=\"display: block; border: 0;\"></a></td>\n<td width=\"1\" height=\"96\" bgcolor=\"#08833C\" style=\"width: 1px; height: 96px; background-color: #08833c; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px; white-space: nowrap;\">\n<div style=\"font-size: 15px; font-weight: 600; color: #08833c; margin: 0;\">{{nombre}}</div>\n<div style=\"font-size: 14px; font-weight: bold; color: #08833c; margin-top: 3px;\">{{cargo}}</div>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#08833C\" style=\"width: 1px; height: 96px; background-color: #08833c; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_email.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #08833c; white-space: nowrap;\"><a href=\"mailto:{{correo}}\" style=\"color: #08833c; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_phone.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #08833c; white-space: nowrap;\"><a href=\"tel:{{telefono}}\" style=\"color: #08833c; text-decoration: none;\">{{telefono}} - {{celular}}</a></td>\n</tr>\n<tr>\n<td style=\"width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_location.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: #08833c; white-space: nowrap;\">Calle 71 No. 72A &ndash; 41 Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#08833C\" style=\"width: 1px; height: 96px; background-color: #08833c; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding-left: 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td align=\"center\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.instagram.com/sarupetrol/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_instagram.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.facebook.com/reel/1517311290167042\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_facebook.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.linkedin.com/company/sarupetrol-s-a-s\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_linkedin.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.tiktok.com/@sarupetrol\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_tiktok.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td><a href=\"https://www.youtube.com/@ELITEFACILITYMANAGEMENT\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/icon_youtube.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n<tr>\n<td align=\"center\" style=\"padding-top: 7px;\"><a href=\"https://www.sarupetrol.com/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_sarupetrol/btn_web.png\" width=\"145\" height=\"24\" style=\"display: block; border: 0; margin: 0 auto;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #08833c; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #08833c; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  },
+  "masterservice": {
+    "telDef": "601 743 18 22",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding-right: 18px;\"><a href=\"https://masterservicegroup.com.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/logo_masterservice.png\" width=\"160\" height=\"68\" style=\"display: block; border: 0;\"></a></td>\n<td width=\"1\" height=\"96\" bgcolor=\"#185B70\" style=\"width: 1px; height: 96px; background-color: #185b70; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px; white-space: nowrap;\">\n<div style=\"font-size: 15px; font-weight: 600; color: #185b70; margin: 0;\">{{nombre}}</div>\n<div style=\"font-size: 14px; font-weight: bold; color: #185b70; margin-top: 3px;\">{{cargo}}</div>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#185B70\" style=\"width: 1px; height: 96px; background-color: #185b70; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_email.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #185b70; white-space: nowrap;\"><a href=\"mailto:{{correo}}\" style=\"color: #185b70; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_phone.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #185b70; white-space: nowrap;\"><a href=\"tel:{{telefono}}\" style=\"color: #185b70; text-decoration: none;\">{{telefono}} - {{celular}}</a></td>\n</tr>\n<tr>\n<td style=\"width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_location.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: #185b70; white-space: nowrap;\">Calle 71 No. 72A &ndash; 41 Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#185B70\" style=\"width: 1px; height: 96px; background-color: #185b70; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding-left: 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td align=\"center\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.instagram.com/masterservicegroup.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_instagram.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.facebook.com/masterservicesgroup\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_facebook.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://co.linkedin.com/company/master-service-group-sas\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_linkedin.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.tiktok.com/@masterservicegroup.co\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_tiktok.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td><a href=\"https://www.youtube.com/@ELITEFACILITYMANAGEMENT\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/icon_youtube.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n<tr>\n<td align=\"center\" style=\"padding-top: 7px;\"><a href=\"https://masterservicegroup.com.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_masterservice/btn_web.png\" width=\"175\" height=\"24\" style=\"display: block; border: 0; margin: 0 auto;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #185b70; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #185b70; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  },
+  "cienporciento": {
+    "telDef": "350 265 44 97",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding-right: 18px;\"><a href=\"https://cienporciento.com.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/logo_cienporciento.png\" width=\"135\" height=\"72\" style=\"display: block; border: 0;\"></a></td>\n<td width=\"1\" height=\"96\" bgcolor=\"#172035\" style=\"width: 1px; height: 96px; background-color: #172035; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px; white-space: nowrap;\">\n<div style=\"font-size: 15px; font-weight: 600; color: #172035; margin: 0;\">{{nombre}}</div>\n<div style=\"font-size: 14px; font-weight: bold; color: #172035; margin-top: 3px;\">{{cargo}}</div>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#172035\" style=\"width: 1px; height: 96px; background-color: #172035; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_email.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #172035; white-space: nowrap;\"><a href=\"mailto:{{correo}}\" style=\"color: #172035; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_phone.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #172035; white-space: nowrap;\">{{celular}}</td>\n</tr>\n<tr>\n<td style=\"width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_location.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: #172035; white-space: nowrap;\">Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#172035\" style=\"width: 1px; height: 96px; background-color: #172035; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding-left: 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td align=\"center\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.instagram.com/seguridadcienporciento/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_instagram.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.facebook.com/SeguridadCienPorCiento\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_facebook.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://co.linkedin.com/company/seguridad-y-vigilancia-cien-por-ciento-ltda\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_linkedin.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td style=\"padding-right: 4px;\"><a href=\"https://www.tiktok.com/@seguridad100ltda\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_tiktok.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n<td><a href=\"https://www.youtube.com/@ELITEFACILITYMANAGEMENT\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/icon_youtube.png\" width=\"33\" height=\"34\" style=\"display: block; border: 0;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n<tr>\n<td align=\"center\" style=\"padding-top: 7px;\"><a href=\"https://cienporciento.com.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_cienporciento/btn_web.png\" width=\"160\" height=\"24\" style=\"display: block; border: 0; margin: 0 auto;\"></a></td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #172035; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #172035; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  },
+  "serviciostemporales": {
+    "telDef": "601 743 18 22",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding-right: 18px;\"><a href=\"https://elitefms.com.co/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_servicios_temporales/logo_servicios_temporales.png\" width=\"171\" height=\"131\" style=\"display: block; border: 0;\"></a></td>\n<td width=\"1\" height=\"96\" bgcolor=\"#00558F\" style=\"width: 1px; height: 96px; background-color: #00558f; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px; white-space: nowrap;\">\n<div style=\"font-size: 15px; font-weight: 600; color: #00558f; margin: 0;\">{{nombre}}</div>\n<div style=\"font-size: 14px; font-weight: bold; color: #00558f; margin-top: 3px;\">{{cargo}}</div>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#00558F\" style=\"width: 1px; height: 96px; background-color: #00558f; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_servicios_temporales/icon_email_blue.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #00558f; white-space: nowrap;\"><a href=\"mailto:{{correo}}\" style=\"color: #00558f; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_servicios_temporales/icon_phone_blue.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #00558f; white-space: nowrap;\">{{celular}}</td>\n</tr>\n<tr>\n<td style=\"width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_servicios_temporales/icon_location_blue.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: #00558f; white-space: nowrap;\">Calle 71 No. 72A &ndash; 41 Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #00558f; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #00558f; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  },
+  "bienesraices": {
+    "telDef": "601 743 18 22",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding-right: 18px;\"><a href=\"https://gruposandor.com/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_bienesraices/logo_bienesraices.png\" width=\"145\" height=\"70\" style=\"display: block; border: 0;\"></a></td>\n<td width=\"1\" height=\"96\" bgcolor=\"#1F4E78\" style=\"width: 1px; height: 96px; background-color: #1f4e78; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px; white-space: nowrap;\">\n<div style=\"font-size: 15px; font-weight: 600; color: #1f4e78; margin: 0;\">{{nombre}}</div>\n<div style=\"font-size: 14px; font-weight: bold; color: #1f4e78; margin-top: 3px;\">{{cargo}}</div>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#1F4E78\" style=\"width: 1px; height: 96px; background-color: #1f4e78; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_bienesraices/icon_email.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #1f4e78; white-space: nowrap;\"><a href=\"mailto:{{correo}}\" style=\"color: #1f4e78; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_bienesraices/icon_phone.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #1f4e78; white-space: nowrap;\">{{celular}}</td>\n</tr>\n<tr>\n<td style=\"width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_bienesraices/icon_location.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: #1f4e78; white-space: nowrap;\">Calle 71 No. 72A &ndash; 41 Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #1f4e78; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #1f4e78; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  },
+  "foodpro": {
+    "telDef": "601 743 18 22",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding-right: 18px;\"><a href=\"https://gruposandor.com/\" target=\"_blank\" rel=\"noopener\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_foodpro/logo_foodpro.png\" width=\"140\" height=\"70\" style=\"display: block; border: 0;\"></a></td>\n<td width=\"1\" height=\"96\" bgcolor=\"#D9531E\" style=\"width: 1px; height: 96px; background-color: #d9531e; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px; white-space: nowrap;\">\n<div style=\"font-size: 15px; font-weight: 600; color: #d9531e; margin: 0;\">{{nombre}}</div>\n<div style=\"font-size: 14px; font-weight: bold; color: #d9531e; margin-top: 3px;\">{{cargo}}</div>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#D9531E\" style=\"width: 1px; height: 96px; background-color: #d9531e; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_foodpro/icon_email.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #d9531e; white-space: nowrap;\"><a href=\"mailto:{{correo}}\" style=\"color: #d9531e; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_foodpro/icon_phone.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #d9531e; white-space: nowrap;\">{{celular}}</td>\n</tr>\n<tr>\n<td style=\"width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_foodpro/icon_location.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: #d9531e; white-space: nowrap;\">Calle 71 No. 72A &ndash; 41 Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #d9531e; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #d9531e; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  },
+  "corporativa": {
+    "telDef": "601 743 18 22",
+    "html": "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#FFFFFF\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; border-collapse: collapse; background-color: #ffffff;\">\n<tbody>\n<tr>\n<td style=\"vertical-align: middle; padding: 0 18px; white-space: nowrap;\">\n<div style=\"font-size: 15px; font-weight: 600; color: #1f4e78; margin: 0;\">{{nombre}}</div>\n<div style=\"font-size: 14px; font-weight: bold; color: #1f4e78; margin-top: 3px;\">{{cargo}}</div>\n</td>\n<td width=\"1\" height=\"96\" bgcolor=\"#1F4E78\" style=\"width: 1px; height: 96px; background-color: #1f4e78; font-size: 0; line-height: 0;\">&nbsp;</td>\n<td style=\"vertical-align: middle; padding: 0 18px;\">\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n<tbody>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_corporativa/icon_email_blue.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #1f4e78; white-space: nowrap;\"><a href=\"mailto:{{correo}}\" style=\"color: #1f4e78; text-decoration: none;\">{{correo}}</a></td>\n</tr>\n<tr>\n<td style=\"padding-bottom: 5px; width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_corporativa/icon_phone_blue.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-bottom: 5px; padding-left: 7px; font-size: 12.5px; color: #1f4e78; white-space: nowrap;\">{{celular}}</td>\n</tr>\n<tr>\n<td style=\"width: 20px; vertical-align: middle;\"><img src=\"https://liderticelite.github.io/Firmas-de-Correo/assets_corporativa/icon_location_blue.png\" width=\"15\" height=\"15\" style=\"display: block; border: 0;\"></td>\n<td style=\"padding-left: 7px; font-size: 12.5px; color: #1f4e78; white-space: nowrap;\">Calle 71 No. 72A &ndash; 41 Bogot&aacute; D. C</td>\n</tr>\n</tbody>\n</table>\n</td>\n</tr>\n</tbody>\n</table>\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-family: 'Segoe UI',Calibri,Arial,sans-serif; max-width: 680px; margin-top: 16px;\">\n<tbody>\n<tr>\n<td style=\"font-size: 11px; color: #1f4e78; line-height: 1.35;\"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener informaci&oacute;n confidencial y est&aacute;n dirigidos exclusivamente a sus destinatarios. Si lo recibi&oacute; por error, por favor informe al remitente y elim&iacute;nelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td>\n</tr>\n<tr>\n<td style=\"padding-top: 8px; font-size: 11px; color: #1f4e78; font-weight: bold; font-style: italic;\">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td>\n</tr>\n</tbody>\n</table>"
+  }
+};
+const REGLAS_FIRMAS = [
+  {
+    "tipo": "dominio",
+    "valor": "toctocaseo.com",
+    "formato": "corporativa"
+  },
+  {
+    "tipo": "dominio",
+    "valor": "fjsb.com.co",
+    "formato": "corporativa"
+  },
+  {
+    "tipo": "dominio",
+    "valor": "sarupetrol.com",
+    "formato": "sarupetrol"
+  },
+  {
+    "tipo": "dominio",
+    "valor": "masterservicegroup.com.co",
+    "formato": "masterservice"
+  },
+  {
+    "tipo": "dominio",
+    "valor": "g.cienporciento.com.co",
+    "formato": "cienporciento"
+  },
+  {
+    "tipo": "dominio",
+    "valor": "cienporciento.com.co",
+    "formato": "cienporciento"
+  },
+  {
+    "tipo": "empresa",
+    "valor": "bienes",
+    "formato": "bienesraices"
+  },
+  {
+    "tipo": "empresa",
+    "valor": "raices",
+    "formato": "bienesraices"
+  },
+  {
+    "tipo": "empresa",
+    "valor": "temporal",
+    "formato": "serviciostemporales"
+  },
+  {
+    "tipo": "empresa",
+    "valor": "foodpro",
+    "formato": "foodpro"
+  },
+  {
+    "tipo": "dominio",
+    "valor": "elite.com.co",
+    "formato": "elite"
+  }
+];
 
 let msalInstance = null;
 let cachedProfile = null;
 
-Office.onReady(() => {
-    // Office listo
-});
+Office.onReady(() => {});
 
-/**
- * Obtiene el perfil real del usuario desde Microsoft Graph (Entra ID)
- */
 async function obtenerPerfilUsuario() {
-    if (cachedProfile) {
-        return cachedProfile;
+  if (cachedProfile) return cachedProfile;
+  const fallbackProfile = {
+    displayName: Office.context.mailbox.userProfile.displayName || "",
+    jobTitle: "", phone: "", companyName: "", department: ""
+  };
+  try {
+    if (!msalInstance && typeof msal !== "undefined" && msal.createNestablePublicClientApplication) {
+      msalInstance = await msal.createNestablePublicClientApplication({
+        auth: { clientId: CLIENT_ID, authority: `https://login.microsoftonline.com/${TENANT_ID}` }
+      });
     }
-
-    const fallbackProfile = {
-        displayName: Office.context.mailbox.userProfile.displayName || "",
-        jobTitle: "",
-        phone: ""
-    };
-
-    try {
-        if (!msalInstance && typeof msal !== "undefined" && msal.createNestablePublicClientApplication) {
-            msalInstance = await msal.createNestablePublicClientApplication({
-                auth: {
-                    clientId: CLIENT_ID,
-                    authority: `https://login.microsoftonline.com/${TENANT_ID}`
-                }
-            });
-        }
-
-        if (msalInstance) {
-            const tokenResponse = await msalInstance.acquireTokenSilent({
-                scopes: ["User.Read"]
-            });
-
-            if (tokenResponse && tokenResponse.accessToken) {
-                const res = await fetch(
-                    "https://graph.microsoft.com/v1.0/me?$select=displayName,jobTitle,mobilePhone,businessPhones,mail",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${tokenResponse.accessToken}`
-                        }
-                    }
-                );
-
-                if (res.ok) {
-                    const data = await res.json();
-                    const tel = data.mobilePhone || (data.businessPhones && data.businessPhones[0]) || "";
-                    cachedProfile = {
-                        displayName: data.displayName || fallbackProfile.displayName,
-                        jobTitle: data.jobTitle || "",
-                        phone: tel
-                    };
-                    return cachedProfile;
-                }
-            }
-        }
-    } catch (err) {
-        console.warn("No se pudo consultar Graph en segundo plano, usando respaldo:", err);
-    }
-
-    return fallbackProfile;
-}
-
-/**
- * Genera el HTML corporativo exacto según el dominio del remitente
- */
-function construirHtmlFirma(senderEmail, perfil) {
-    const email = (senderEmail || "").trim().toLowerCase();
-    const domain = email.split("@")[1] || "";
-
-    // Dominios omitidos explícitamente (dejan el correo sin firma)
-    if (domain === "toctocaseo.com" || domain === "fjsb.com.co") {
-        return "";
-    }
-
-    const nombre = perfil.displayName || "";
-    const cargo = perfil.jobTitle || "";
-
-    // 1. ELITE FACILITY MANAGEMENT SAS
-    if (domain === "elite.com.co") {
-        const cdn = `${ASSETS_BASE}/assets_elite`;
-        const tel = perfil.phone || "601 743 18 22";
-        return `<table cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;border-collapse:collapse;background-color:#FFFFFF;"><tr><td width="229" height="131" style="vertical-align:middle;padding:0;width:229px;height:131px;"><a href="https://elitefms.com.co/" target="_blank" style="text-decoration:none;"><img src="${cdn}/logo_elite.png" alt="Elite Facility Management" width="229" height="131" style="display:block;border:0;width:229px;height:131px;"></a></td><td height="131" style="vertical-align:middle;padding-left:22px;padding-right:22px;height:131px;"><div style="font-size:14px;font-weight:600;color:#3A81B1;line-height:1.25;margin:0;white-space:nowrap;">${nombre}</div><div style="font-size:13px;font-weight:700;color:#3A81B1;line-height:1.25;margin-top:2px;margin-bottom:8px;white-space:nowrap;">${cargo}</div><table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr><td style="padding-bottom:5px;vertical-align:middle;width:20px;"><img src="${cdn}/icon_email.png" alt="Email" width="15" height="15" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:7px;vertical-align:middle;font-size:12.5px;color:#3A81B1;white-space:nowrap;"><a href="mailto:${email}" style="color:#3A81B1;text-decoration:none;">${email}</a></td></tr><tr><td style="padding-bottom:5px;vertical-align:middle;width:20px;"><img src="${cdn}/icon_phone.png" alt="Tel" width="15" height="15" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:7px;vertical-align:middle;font-size:12.5px;color:#3A81B1;white-space:nowrap;"><a href="tel:${tel}" style="color:#3A81B1;text-decoration:none;">${tel}</a></td></tr><tr><td style="vertical-align:middle;width:20px;"><img src="${cdn}/icon_location.png" alt="Ubicación" width="15" height="15" style="display:block;border:0;"></td><td style="padding-left:7px;vertical-align:middle;font-size:12.5px;color:#3A81B1;white-space:nowrap;">Calle 71 No. 72A – 41 Bogotá D. C</td></tr></table></td><td height="131" style="vertical-align:middle;padding:0;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="1" height="96" bgcolor="#3A81B1" style="width:1px;height:96px;background-color:#3A81B1;font-size:0;line-height:0;">&nbsp;</td></tr></table></td><td height="131" style="vertical-align:middle;padding-left:22px;padding-right:10px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right:4px;"><a href="https://www.instagram.com/elitefms.co/" target="_blank"><img src="${cdn}/icon_instagram.png" alt="Instagram" width="35" height="36" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.facebook.com/elitefms/" target="_blank"><img src="${cdn}/icon_facebook.png" alt="Facebook" width="35" height="36" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://co.linkedin.com/company/elitefms" target="_blank"><img src="${cdn}/icon_linkedin.png" alt="LinkedIn" width="35" height="36" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.tiktok.com/@elitefms.co" target="_blank"><img src="${cdn}/icon_tiktok.png" alt="TikTok" width="35" height="36" style="display:block;border:0;"></a></td><td><a href="https://www.youtube.com/@ELITEFACILITYMANAGEMENT" target="_blank"><img src="${cdn}/icon_youtube.png" alt="YouTube" width="35" height="36" style="display:block;border:0;"></a></td></tr></table></td></tr><tr><td align="center" style="padding-top:8px;"><a href="https://elitefms.com.co/" target="_blank"><img src="${cdn}/btn_web.png" alt="www.elitefms.com.co" width="143" height="22" style="display:block;border:0;margin:0 auto;"></a></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" border="0" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;max-width:680px;margin-top:16px;"><tr><td style="font-size:11px;color:#3A81B1;line-height:1.35;"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener información confidencial y están dirigidos exclusivamente a sus destinatarios. Si lo recibió por error, por favor informe al remitente y elimínelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td></tr><tr><td style="padding-top:8px;font-size:11px;color:#3A81B1;font-weight:700;font-style:italic;">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td></tr></table>`;
-    }
-
-    // 2. SARUPETROL SAS
-    if (domain === "sarupetrol.com") {
-        const cdn = `${ASSETS_BASE}/assets_sarupetrol`;
-        const tel = perfil.phone || "601 927 80 89";
-        return `<table cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;border-collapse:collapse;background-color:#FFFFFF;"><tr><td style="vertical-align:middle;padding-right:18px;"><a href="https://www.sarupetrol.com/" target="_blank"><img src="${cdn}/logo_sarupetrol.png" alt="Sarupetrol" width="130" height="76" style="display:block;border:0;"></a></td><td width="1" height="96" bgcolor="#08833C" style="width:1px;height:96px;background-color:#08833C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding:0 18px;white-space:nowrap;"><div style="font-size:15px;font-weight:600;color:#08833C;margin:0;">${nombre}</div><div style="font-size:14px;font-weight:700;color:#08833C;margin-top:3px;">${cargo}</div></td><td width="1" height="96" bgcolor="#08833C" style="width:1px;height:96px;background-color:#08833C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding:0 18px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-bottom:5px;width:20px;vertical-align:middle;"><img src="${cdn}/icon_email.png" alt="Email" width="16" height="16" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:8px;font-size:13px;color:#08833C;white-space:nowrap;"><a href="mailto:${email}" style="color:#08833C;text-decoration:none;font-weight:500;">${email}</a></td></tr><tr><td style="padding-bottom:5px;width:20px;vertical-align:middle;"><img src="${cdn}/icon_phone.png" alt="Tel" width="16" height="16" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:8px;font-size:13px;color:#08833C;white-space:nowrap;"><a href="tel:${tel}" style="color:#08833C;text-decoration:none;">${tel}</a></td></tr><tr><td style="width:20px;vertical-align:middle;"><img src="${cdn}/icon_location.png" alt="Ubicación" width="16" height="16" style="display:block;border:0;"></td><td style="padding-left:8px;font-size:13px;color:#08833C;white-space:nowrap;">Calle 71 No. 72A – 41 Bogotá D. C</td></tr></table></td><td width="1" height="96" bgcolor="#08833C" style="width:1px;height:96px;background-color:#08833C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding-left:18px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right:4px;"><a href="https://www.instagram.com/sarupetrol/" target="_blank"><img src="${cdn}/icon_instagram.png" alt="IG" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.facebook.com/reel/1517311290167042" target="_blank"><img src="${cdn}/icon_facebook.png" alt="FB" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.linkedin.com/company/sarupetrol-s-a-s" target="_blank"><img src="${cdn}/icon_linkedin.png" alt="IN" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.tiktok.com/@sarupetrol" target="_blank"><img src="${cdn}/icon_tiktok.png" alt="TT" width="33" height="34" style="display:block;border:0;"></a></td><td><a href="https://www.youtube.com/@ELITEFACILITYMANAGEMENT" target="_blank"><img src="${cdn}/icon_youtube.png" alt="YT" width="33" height="34" style="display:block;border:0;"></a></td></tr></table></td></tr><tr><td align="center" style="padding-top:7px;"><a href="https://www.sarupetrol.com/" target="_blank"><img src="${cdn}/btn_web.png" alt="www.sarupetrol.com" width="145" height="24" style="display:block;border:0;margin:0 auto;"></a></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" border="0" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;max-width:680px;margin-top:16px;"><tr><td style="font-size:11px;color:#08833C;line-height:1.35;"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener información confidencial y están dirigidos exclusivamente a sus destinatarios. Si lo recibió por error, por favor informe al remitente y elimínelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td></tr><tr><td style="padding-top:8px;font-size:11px;color:#08833C;font-weight:700;font-style:italic;">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td></tr></table>`;
-    }
-
-    // 3. MASTER SERVICE GROUP
-    if (domain === "masterservicegroup.com.co") {
-        const cdn = `${ASSETS_BASE}/assets_masterservice`;
-        const tel = perfil.phone || "601 743 18 22";
-        return `<table cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;border-collapse:collapse;background-color:#FFFFFF;"><tr><td style="vertical-align:middle;padding-right:18px;"><a href="https://masterservicegroup.com.co/" target="_blank"><img src="${cdn}/logo_masterservice.png" alt="Master Service" width="160" height="68" style="display:block;border:0;"></a></td><td width="1" height="96" bgcolor="#D9261C" style="width:1px;height:96px;background-color:#D9261C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding:0 18px;white-space:nowrap;"><div style="font-size:15px;font-weight:600;color:#D9261C;margin:0;">${nombre}</div><div style="font-size:14px;font-weight:700;color:#D9261C;margin-top:3px;">${cargo}</div></td><td width="1" height="96" bgcolor="#D9261C" style="width:1px;height:96px;background-color:#D9261C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding:0 18px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-bottom:5px;width:20px;vertical-align:middle;"><img src="${cdn}/icon_email.png" alt="Email" width="16" height="16" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:8px;font-size:13px;color:#D9261C;white-space:nowrap;"><a href="mailto:${email}" style="color:#D9261C;text-decoration:none;">${email}</a></td></tr><tr><td style="padding-bottom:5px;width:20px;vertical-align:middle;"><img src="${cdn}/icon_phone.png" alt="Tel" width="16" height="16" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:8px;font-size:13px;color:#D9261C;white-space:nowrap;"><a href="tel:${tel}" style="color:#D9261C;text-decoration:none;">${tel}</a></td></tr><tr><td style="width:20px;vertical-align:middle;"><img src="${cdn}/icon_location.png" alt="Ubicación" width="16" height="16" style="display:block;border:0;"></td><td style="padding-left:8px;font-size:13px;color:#D9261C;white-space:nowrap;">Calle 71 No. 72A – 41 Bogotá D. C</td></tr></table></td><td width="1" height="96" bgcolor="#D9261C" style="width:1px;height:96px;background-color:#D9261C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding-left:18px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right:4px;"><a href="https://www.instagram.com/masterservicegroup.co/" target="_blank"><img src="${cdn}/icon_instagram.png" alt="IG" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.facebook.com/masterservicesgroup" target="_blank"><img src="${cdn}/icon_facebook.png" alt="FB" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://co.linkedin.com/company/master-service-group-sas" target="_blank"><img src="${cdn}/icon_linkedin.png" alt="IN" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.tiktok.com/@masterservicegroup.co" target="_blank"><img src="${cdn}/icon_tiktok.png" alt="TT" width="33" height="34" style="display:block;border:0;"></a></td><td><a href="https://www.youtube.com/@ELITEFACILITYMANAGEMENT" target="_blank"><img src="${cdn}/icon_youtube.png" alt="YT" width="33" height="34" style="display:block;border:0;"></a></td></tr></table></td></tr><tr><td align="center" style="padding-top:7px;"><a href="https://masterservicegroup.com.co/" target="_blank"><img src="${cdn}/btn_web.png" alt="www.masterservicegroup.com.co" width="175" height="24" style="display:block;border:0;margin:0 auto;"></a></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" border="0" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;max-width:680px;margin-top:16px;"><tr><td style="font-size:11px;color:#D9261C;line-height:1.35;"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener información confidencial y están dirigidos exclusivamente a sus destinatarios. Si lo recibió por error, por favor informe al remitente y elimínelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td></tr><tr><td style="padding-top:8px;font-size:11px;color:#D9261C;font-weight:700;font-style:italic;">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td></tr></table>`;
-    }
-
-    // 4. SEGURIDAD Y VIGILANCIA CIEN POR CIENTO
-    if (domain === "g.cienporciento.com.co" || domain === "cienporciento.com.co") {
-        const cdn = `${ASSETS_BASE}/assets_cienporciento`;
-        const tel = perfil.phone || "350 265 44 97";
-        return `<table cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;border-collapse:collapse;background-color:#FFFFFF;"><tr><td style="vertical-align:middle;padding-right:18px;"><a href="https://cienporciento.com.co/" target="_blank"><img src="${cdn}/logo_cienporciento.png" alt="Cien Por Ciento" width="135" height="72" style="display:block;border:0;"></a></td><td width="1" height="96" bgcolor="#D9261C" style="width:1px;height:96px;background-color:#D9261C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding:0 18px;white-space:nowrap;"><div style="font-size:15px;font-weight:600;color:#D9261C;margin:0;">${nombre}</div><div style="font-size:14px;font-weight:700;color:#D9261C;margin-top:3px;">${cargo}</div></td><td width="1" height="96" bgcolor="#D9261C" style="width:1px;height:96px;background-color:#D9261C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding:0 18px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-bottom:5px;width:20px;vertical-align:middle;"><img src="${cdn}/icon_email.png" alt="Email" width="16" height="16" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:8px;font-size:13px;color:#D9261C;white-space:nowrap;"><a href="mailto:${email}" style="color:#D9261C;text-decoration:none;">${email}</a></td></tr><tr><td style="padding-bottom:5px;width:20px;vertical-align:middle;"><img src="${cdn}/icon_phone.png" alt="Tel" width="16" height="16" style="display:block;border:0;"></td><td style="padding-bottom:5px;padding-left:8px;font-size:13px;color:#D9261C;white-space:nowrap;"><a href="tel:${tel}" style="color:#D9261C;text-decoration:none;">${tel}</a></td></tr><tr><td style="width:20px;vertical-align:middle;"><img src="${cdn}/icon_location.png" alt="Ubicación" width="16" height="16" style="display:block;border:0;"></td><td style="padding-left:8px;font-size:13px;color:#D9261C;white-space:nowrap;">Bogotá D. C</td></tr></table></td><td width="1" height="96" bgcolor="#D9261C" style="width:1px;height:96px;background-color:#D9261C;font-size:0;line-height:0;">&nbsp;</td><td style="vertical-align:middle;padding-left:18px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right:4px;"><a href="https://www.instagram.com/seguridadcienporciento/" target="_blank"><img src="${cdn}/icon_instagram.png" alt="IG" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.facebook.com/SeguridadCienPorCiento" target="_blank"><img src="${cdn}/icon_facebook.png" alt="FB" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://co.linkedin.com/company/seguridad-y-vigilancia-cien-por-ciento-ltda" target="_blank"><img src="${cdn}/icon_linkedin.png" alt="IN" width="33" height="34" style="display:block;border:0;"></a></td><td style="padding-right:4px;"><a href="https://www.tiktok.com/@seguridad100ltda" target="_blank"><img src="${cdn}/icon_tiktok.png" alt="TT" width="33" height="34" style="display:block;border:0;"></a></td><td><a href="https://www.youtube.com/@ELITEFACILITYMANAGEMENT" target="_blank"><img src="${cdn}/icon_youtube.png" alt="YT" width="33" height="34" style="display:block;border:0;"></a></td></tr></table></td></tr><tr><td align="center" style="padding-top:7px;"><a href="https://cienporciento.com.co/" target="_blank"><img src="${cdn}/btn_web.png" alt="www.cienporciento.com.co" width="160" height="24" style="display:block;border:0;margin:0 auto;"></a></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" border="0" style="font-family:'Segoe UI',Calibri,Arial,sans-serif;max-width:680px;margin-top:16px;"><tr><td style="font-size:11px;color:#D9261C;line-height:1.35;"><strong>Aviso de confidencialidad:</strong> Este mensaje y sus anexos pueden contener información confidencial y están dirigidos exclusivamente a sus destinatarios. Si lo recibió por error, por favor informe al remitente y elimínelo. Las comunicaciones emitidas desde esta cuenta se realizan dentro del alcance de las funciones y facultades asignadas al remitente.</td></tr><tr><td style="padding-top:8px;font-size:11px;color:#D9261C;font-weight:700;font-style:italic;">🌱 Antes de imprimir este correo, considere si es realmente necesario. Cuidar el medio ambiente es responsabilidad de todos.</td></tr></table>`;
-    }
-
-    return "";
-}
-
-/**
- * Ejecuta la actualización de firma en la ventana de redacción
- */
-async function aplicarFirmaActual(event) {
-    try {
-        const item = Office.context.mailbox.item;
-        const perfil = await obtenerPerfilUsuario();
-
-        item.from.getAsync((fromResult) => {
-            let senderEmail = Office.context.mailbox.userProfile.emailAddress;
-            if (fromResult.status === Office.AsyncResultStatus.Succeeded && fromResult.value && fromResult.value.emailAddress) {
-                senderEmail = fromResult.value.emailAddress;
-            }
-
-            const htmlFirma = construirHtmlFirma(senderEmail, perfil);
-
-            item.body.setSignatureAsync(
-                htmlFirma,
-                { coercionType: Office.CoercionType.Html },
-                (setResult) => {
-                    if (setResult.status === Office.AsyncResultStatus.Failed) {
-                        console.error("Error setSignatureAsync:", setResult.error.message);
-                    }
-                    event.completed();
-                }
-            );
+    if (msalInstance) {
+      const tokenResponse = await msalInstance.acquireTokenSilent({ scopes: ["User.Read"] });
+      if (tokenResponse && tokenResponse.accessToken) {
+        const res = await fetch("https://graph.microsoft.com/v1.0/me?$select=displayName,jobTitle,mobilePhone,businessPhones,companyName,department,mail", {
+          headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
         });
-    } catch (e) {
-        console.error("Error general al aplicar firma:", e);
-        event.completed();
+        if (res.ok) {
+          const data = await res.json();
+          cachedProfile = {
+            displayName: data.displayName || fallbackProfile.displayName,
+            jobTitle: data.jobTitle || "",
+            phone: data.mobilePhone || (data.businessPhones && data.businessPhones[0]) || "",
+            companyName: (data.companyName || "").toLowerCase(),
+            department: (data.department || "").toLowerCase()
+          };
+          return cachedProfile;
+        }
+      }
     }
+  } catch (err) { console.warn("Fallback perfil:", err); }
+  return fallbackProfile;
 }
 
-function onNewMessageComposeHandler(event) {
-    aplicarFirmaActual(event);
+function construirHtmlFirma(senderEmail, perfil) {
+  const email = (senderEmail || "").trim().toLowerCase();
+  const domain = email.split("@")[1] || "";
+  const emp = ((perfil.companyName || "") + " " + (perfil.department || "")).toLowerCase();
+
+  let key = null;
+  for (const r of REGLAS_FIRMAS) {
+    const val = (r.valor || "").trim().toLowerCase();
+    if (!val) continue;
+    if (r.tipo === "correo" && email === val) { key = r.formato; break; }
+    if (r.tipo === "dominio" && domain === val) { key = r.formato; break; }
+    if (r.tipo === "empresa" && emp.includes(val)) { key = r.formato; break; }
+  }
+  if (!key || key === "ninguna" || !PLANTILLAS[key]) return "";
+
+  const tpl = PLANTILLAS[key];
+  const tel = perfil.phone || tpl.telDef;
+  const cel = perfil.mobile || "";
+  return tpl.html
+    .replaceAll("{{nombre}}", perfil.displayName || "")
+    .replaceAll("{{cargo}}", perfil.jobTitle || "")
+    .replaceAll("{{correo}}", email)
+    .replaceAll("{{telefono}}", tel)
+    .replaceAll("{{celular}}", cel);
 }
 
-function onMessageFromChangedHandler(event) {
-    aplicarFirmaActual(event);
+async function aplicarFirmaActual(event) {
+  try {
+    const item = Office.context.mailbox.item;
+    const perfil = await obtenerPerfilUsuario();
+    item.from.getAsync((fromResult) => {
+      let senderEmail = Office.context.mailbox.userProfile.emailAddress;
+      if (fromResult.status === Office.AsyncResultStatus.Succeeded && fromResult.value && fromResult.value.emailAddress) {
+        senderEmail = fromResult.value.emailAddress;
+      }
+      const htmlFirma = construirHtmlFirma(senderEmail, perfil);
+      item.body.setSignatureAsync(htmlFirma, { coercionType: Office.CoercionType.Html }, () => event.completed());
+    });
+  } catch (e) { event.completed(); }
 }
+
+function onNewMessageComposeHandler(event) { aplicarFirmaActual(event); }
+function onMessageFromChangedHandler(event) { aplicarFirmaActual(event); }
 
 if (typeof global !== "undefined") {
-    global.onNewMessageComposeHandler = onNewMessageComposeHandler;
-    global.onMessageFromChangedHandler = onMessageFromChangedHandler;
+  global.onNewMessageComposeHandler = onNewMessageComposeHandler;
+  global.onMessageFromChangedHandler = onMessageFromChangedHandler;
 }
 self.onNewMessageComposeHandler = onNewMessageComposeHandler;
 self.onMessageFromChangedHandler = onMessageFromChangedHandler;
